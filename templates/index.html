@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>AiEye 智能白内障检测</title>
+
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="shortcut icon" href="{{ url_for("static", filename="favicon.ico") }}">
+
+    <link rel="stylesheet" href="{{ url_for("static", filename="layui/css/layui.css") }}" media="all">
+    <link rel="stylesheet" href="{{ url_for("static", filename="layui/css/global.css") }}" media="all">
+    <link rel="stylesheet" href="{{ url_for("static", filename="layui/css/independents.css") }}" media="all">
+    <style>
+        .header,
+        .alone-banner {
+            background-color: #1e9fff !important;
+        }
+
+        .header {
+            border-bottom-color: #008DF7;
+        }
+
+        .alone-title {
+            width: 200px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .header .layui-nav .layui-this:after {
+            background-color: #C1E4FF;
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+    <div class="header">
+        <div class="layui-main">
+            <a class="logo" href="http://www.layui.com/">
+                <img src="{{ url_for("static", filename="layui/logo.png") }}" alt="layui">
+            </a>
+
+        </div>
+    </div>
+
+    <div class="alone-banner layui-bg-black">
+        <div class="layui-main">
+            <h1>AiEye</h1>
+            <p>基于 TensorFlow 的白内障人工智能检测</p>
+        </div>
+    </div>
+
+    <div class="layui-main alone-nav">
+        <br>
+
+
+        <blockquote class="layui-elem-quote layui-text">
+            <ul style="padding-top: 0;">
+                <li>点击下方区域即可选择图片并上传，即时获取预测结果</li>
+            </ul>
+        </blockquote>
+
+        <div class="upload-drag" id="upload_area">
+            <i class="layui-icon"></i>
+            <p>点击上传，或将文件拖拽到此处</p>
+            <p>（暂时只支持jpg、png）</p>
+        </div>
+
+        <fieldset class="layui-elem-field layui-field-title alone-title">
+            <legend>预测结果预览</legend>
+        </fieldset>
+
+        <div class="layui-text">
+            <p style="text-align: center;">
+                <img src="{{ url_for("static", filename="layui/pre.png") }}" alt="预览图" style="max-width: 100%;"
+                    id="pre_img">
+            </p>
+        </div>
+        <br>
+        <div style="width: 60%; margin: 0 auto;">
+            <div style="width: 80%; margin: 0 auto;">
+                <fieldset class="layui-elem-field">
+                    <legend>白内障可能：</legend>
+                    <div class="layui-field-box">
+                        <div class="layui-progress layui-progress-big" lay-filter="cataract" lay-showPercent="true">
+                            <div class="layui-progress-bar" lay-percent="0%"></div>
+                        </div>
+                    </div>
+                </fieldset>
+                <br>
+                <fieldset class="layui-elem-field">
+                    <legend>正常可能：</legend>
+                    <div class="layui-field-box">
+                        <div class="layui-progress layui-progress-big" lay-filter="normal" lay-showPercent="true">
+                            <div class="layui-progress-bar" lay-percent="0%"></div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="layui-elem-field">
+                    <legend>就医建议：</legend>
+                    <div class="layui-field-box">
+                        <p id="p_advice">小 Ai 暂未给出任何建议哦！</p>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-footer footer footer-index">
+        <div class="layui-main">
+            <p>以上预测结果皆由程序给出，无法保证百分百准确，请以专业医师诊断为准</p>
+            <p>© 2018 AiEye</p>
+        </div>
+    </div>
+
+    <script src="{{ url_for("static", filename="layui/layui.js") }}"></script>
+    <script src="{{ url_for("static", filename="layui/aieye.js") }}"></script>
+</body>
+
+</html>
