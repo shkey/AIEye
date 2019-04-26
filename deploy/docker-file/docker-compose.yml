@@ -1,0 +1,32 @@
+version: '2.2'
+services:
+  mongo:
+    build: ./mongo
+    volumes:
+      - "./mongo/db:/data/db"
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+  flask:
+    build: ./flask
+    links:
+      - mongo
+    ports:
+      - "5000:5000"
+    volumes:
+      - "../../src/AIEye:/home/web"
+    restart: always
+  nginx:
+      build: ./nginx
+      links:
+        - flask
+      volumes:
+        - "./nginx/log:/var/log/nginx"
+        - "../../src/AIEye:/usr/share/nginx/html"
+      ports:
+        - "80:80"
+        - "443:443"
+      restart: always

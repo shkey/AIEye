@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>AIEye 智能白内障检测——历史预测列表</title>
+
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="shortcut icon" href="{{ url_for("static", filename="favicon.ico") }}">
+    <link rel="stylesheet" href="{{ url_for("static", filename="layui/css/layui.css") }}" media="all">
+    <link rel="stylesheet" href="{{ url_for("static", filename="layui/css/global.css") }}" media="all">
+    <link rel="stylesheet" href="{{ url_for("static", filename="layui/css/independents.css") }}" media="all">
+
+    <style>
+        .header,
+        .alone-banner {
+            background-color: #1e9fff !important;
+        }
+
+        .header {
+            border-bottom-color: #008DF7;
+        }
+
+        .alone-title {
+            width: 200px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .header .layui-nav .layui-this:after {
+            background-color: #C1E4FF;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="layui-main">
+            <a class="logo" href="/">
+                <img src="{{ url_for("static", filename="layui/images/logo.png") }}" alt="layui">
+            </a>
+        </div>
+        <div class="header-wrap">
+            <div class="blog-nav pull-right">
+                <ul class="layui-nav pull-left">
+                    <li class="layui-nav-item"><a href="/">首页</a></li>
+                    <li class="layui-nav-item layui-this"><a href="predictions">历史预测列表</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="alone-banner layui-bg-black">
+        <div class="layui-main">
+            <h1>AIEye</h1>
+            <p>基于 TensorFlow 的白内障人工智能检测</p>
+        </div>
+    </div>
+
+    <div class="layui-main alone-nav">
+        <br>
+        <fieldset class="layui-elem-field layui-field-title alone-title">
+            <legend>历史预测列表</legend>
+        </fieldset>
+
+        <table id="predict_table" lay-filter="predict"></table>
+
+        <div class="layui-footer footer footer-index">
+            <div class="layui-main">
+                <p>以上预测结果皆由程序给出，无法保证百分百准确，请以专业医师诊断为准</p>
+                <p>2018 AIEye © <a href="https://www.github.com/shkey">shkey</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for("static", filename="layui/layui.js") }}"></script>
+    <script>
+        layui.use('table', function () {
+            var table = layui.table;
+
+            //第一个实例
+            table.render({
+                elem: '#predict_table'
+                , height: 500
+                , url: '/api/prediction' //数据接口
+                , response: {
+                    statusName: 'code' //规定数据状态的字段名称，默认：code
+                    , statusCode: 200 //规定成功的状态码，默认：0
+                    , msgName: 'msg' //规定状态信息的字段名称，默认：msg
+                    , countName: 'count' //规定数据总数的字段名称，默认：count
+                    , dataName: 'data' //规定数据列表的字段名称，默认：data
+                }
+                , parseData: function (res) { //res 即为原始返回的数据
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.msg, //解析提示文本
+                        "count": res.count, //解析数据长度
+                        "data": res.data //解析数据列表
+                    };
+                }
+                , initSort: {
+                    field: 'predict_time' //排序字段，对应 cols 设定的各字段名
+                    , type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+                }
+                , page: true //开启分页
+                , limit: 20
+                , cols: [[ //表头
+                    {
+                        field: 'path',
+                        title: '预览',
+                        width: 60,
+                        templet: function (d) {
+                            return '<div><a href="/' + d.path + '" class="layui-table-link"><img src="' + d.path + '" width="30px"></a></div>'
+                        }
+                    },
+                    {
+                        field: 'path',
+                        title: '存储路径',
+                        width: 330,
+                        sort: true,
+                        templet: function (d) {
+                            return '<div><a href="/' + d.path + '" class="layui-table-link">' + d.path + '</a></div>'
+                        }
+                    }
+                    , { field: 'predict_time', title: '上传时间', width: 240, sort: true }
+                    , { field: 'cataract', title: '白内障可能性', width: 160, sort: true }
+                    , { field: 'normal', title: '正常可能性', width: 160, sort: true }
+                    , { field: 'category', title: '类别', width: 160, sort: true }
+                ]]
+            });
+        });
+    </script>
+</body>
+
+</html>

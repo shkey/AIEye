@@ -1,0 +1,8 @@
+werkzeug
+numpy
+flask
+flask_cors
+flask_restful
+flask_mongoengine
+gevent
+tensorflow
