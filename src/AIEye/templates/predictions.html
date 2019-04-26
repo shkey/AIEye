@@ -75,7 +75,7 @@
         <div class="layui-footer footer footer-index">
             <div class="layui-main">
                 <p>以上预测结果皆由程序给出，无法保证百分百准确，请以专业医师诊断为准</p>
-                <p>2018 AIEye © <a href="https://www.github.com/shkey">shkey</a></p>
+                <p>2018 AIEye © <a href="https://www.github.com/shkey" target="_blank">shkey</a></p>
             </div>
         </div>
     </div>
@@ -117,7 +117,7 @@
                         title: '预览',
                         width: 60,
                         templet: function (d) {
-                            return '<div><a href="/' + d.path + '" class="layui-table-link"><img src="' + d.path + '" width="30px"></a></div>'
+                            return '<div><a href="/' + d.path + '" class="layui-table-link" target="_blank"><img src="' + d.path + '" width="30px"></a></div>'
                         }
                     },
                     {
@@ -126,7 +126,7 @@
                         width: 330,
                         sort: true,
                         templet: function (d) {
-                            return '<div><a href="/' + d.path + '" class="layui-table-link">' + d.path + '</a></div>'
+                            return '<div><a href="/' + d.path + '" class="layui-table-link" target="_blank">' + d.path + '</a></div>'
                         }
                     }
                     , { field: 'predict_time', title: '上传时间', width: 240, sort: true }
