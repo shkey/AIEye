@@ -7,8 +7,8 @@
 如何部署使用？（前提是你的电脑上已经安装了 Docker 和 docker-compose）
 
 ```bash
-# 克隆本仓库至你的电脑
-$ git clone https://github.com/shkey/AIEye.git
+# 克隆本仓库至你的电脑（由于启用了 git lfs，需要安装git-lfs进行克隆）
+$ git lfs clone https://github.com/shkey/AIEye.git
 # 进入本仓库的 deploy 目录
 $ cd AIEye/deploy
 # 运行以下命令进行部署
