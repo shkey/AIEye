@@ -31,6 +31,11 @@ input_layer = 'Placeholder'
 output_layer = 'final_result'
 
 
+def check_dir(dir_path):
+    if not os.path.exists(dir_path):
+        os.makedirs(dir_path)
+
+
 def load_graph(model_file):
     graph = tf.Graph()
     graph_def = tf.GraphDef()
@@ -181,6 +186,7 @@ class Prediction(Resource):
             app.config['UPLOAD_FOLDER'],
             upload_file_name
         )
+        check_dir(app.config['UPLOAD_FOLDER'])
         file.save(upload_path)
         res = get_label(upload_path)
         prediction = PredictionResult()
