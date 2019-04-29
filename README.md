@@ -2,7 +2,7 @@
 
 一个由 Flask，TensorFlow 和 Gevent 编写并使用 Docker 进行部署的能简单进行白内障识别检测的应用。
 
-演示地址：http://aieye.fumengji.com
+演示地址：<http://aieye.fumengji.com>
 
 ## 如何部署使用？
 
@@ -17,7 +17,7 @@ $ cd AIEye/deploy
 $ docker-compose up -d
 ```
 
-如果你是在本地电脑进行部署的，那么就打开浏览器输入 http://localhost 进行访问，如果是在云端服务器进行部署的，那么就在浏览器输入你服务器公网 IP 或域名进行访问，查看具体运行效果。
+如果你是在本地电脑进行部署的，那么就打开浏览器输入 <http://localhost> 进行访问，如果是在云端服务器进行部署的，那么就在浏览器输入你服务器公网 IP 或域名进行访问，查看具体运行效果。
 
 ## LICENSE
 
