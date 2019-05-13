@@ -22,7 +22,7 @@ app.config['ALLOWED_EXTENSIONS'] = set(['png', 'jpg', 'jpeg', 'gif'])
 app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
 
 model_file = 'output_graph.pb'
-label_file = 'retrained_labels.txt'
+label_file = 'output_labels.txt'
 input_height = 299
 input_width = 299
 input_mean = 0
