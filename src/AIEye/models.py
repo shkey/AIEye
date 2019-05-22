@@ -5,7 +5,6 @@ from pytz import timezone, utc
 
 from factory import db
 
-
 cst_tz = timezone('Asia/Shanghai')
 utc_tz = timezone('UTC')
 
@@ -38,6 +37,4 @@ class PredictionResult(db.Document):
     def __str__(self):
         return self.to_dict()
 
-    meta = {
-        'allow_inheritance': False
-    }
+    meta = {'allow_inheritance': False}

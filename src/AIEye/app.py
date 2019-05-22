@@ -57,20 +57,22 @@ def read_tensor_from_image_file(file_name,
     output_name = "normalized"
     file_reader = tf.read_file(file_name, input_name)
     if file_name.endswith(".png"):
-        image_reader = tf.image.decode_png(
-            file_reader, channels=3, name="png_reader")
+        image_reader = tf.image.decode_png(file_reader,
+                                           channels=3,
+                                           name="png_reader")
     elif file_name.endswith(".gif"):
         image_reader = tf.squeeze(
             tf.image.decode_gif(file_reader, name="gif_reader"))
     elif file_name.endswith(".bmp"):
         image_reader = tf.image.decode_bmp(file_reader, name="bmp_reader")
     else:
-        image_reader = tf.image.decode_jpeg(
-            file_reader, channels=3, name="jpeg_reader")
+        image_reader = tf.image.decode_jpeg(file_reader,
+                                            channels=3,
+                                            name="jpeg_reader")
     float_caster = tf.cast(image_reader, tf.float32)
     dims_expander = tf.expand_dims(float_caster, 0)
-    resized = tf.image.resize_bilinear(
-        dims_expander, [input_height, input_width])
+    resized = tf.image.resize_bilinear(dims_expander,
+                                       [input_height, input_width])
     normalized = tf.divide(tf.subtract(resized, [input_mean]), [input_std])
     sess = tf.Session()
     result = sess.run(normalized)
@@ -96,15 +98,13 @@ sess = tf.Session(graph=graph)
 
 
 def get_label(file_name):
-    t = read_tensor_from_image_file(
-        file_name,
-        input_height=input_height,
-        input_width=input_width,
-        input_mean=input_mean,
-        input_std=input_std)
-    results = sess.run(output_operation.outputs[0], {
-        input_operation.outputs[0]: t
-    })
+    t = read_tensor_from_image_file(file_name,
+                                    input_height=input_height,
+                                    input_width=input_width,
+                                    input_mean=input_mean,
+                                    input_std=input_std)
+    results = sess.run(output_operation.outputs[0],
+                       {input_operation.outputs[0]: t})
 
     results = np.squeeze(results)
 
@@ -121,29 +121,26 @@ def get_label(file_name):
 
 def allowed_file(filename):
     """判断filename是否有后缀以及后缀是否在app.config['ALLOWED_EXTENSIONS']中"""
-    return '.' in filename and filename.rsplit('.', 1)[1] in app.config[
-        'ALLOWED_EXTENSIONS']
+    return '.' in filename and filename.rsplit(
+        '.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
 
 class Prediction(Resource):
     def get(self):
         predcit_get_parser = reqparse.RequestParser()
 
-        predcit_get_parser.add_argument(
-            'page',
-            type=int,
-            location=['json', 'args', 'headers'],
-            required=False)
-        predcit_get_parser.add_argument(
-            'limit',
-            type=int,
-            location=['json', 'args', 'headers'],
-            required=False)
-        predcit_get_parser.add_argument(
-            'category',
-            type=str,
-            location=['json', 'args', 'headers'],
-            required=False)
+        predcit_get_parser.add_argument('page',
+                                        type=int,
+                                        location=['json', 'args', 'headers'],
+                                        required=False)
+        predcit_get_parser.add_argument('limit',
+                                        type=int,
+                                        location=['json', 'args', 'headers'],
+                                        required=False)
+        predcit_get_parser.add_argument('category',
+                                        type=str,
+                                        location=['json', 'args', 'headers'],
+                                        required=False)
         args = predcit_get_parser.parse_args()
         page = args.get('page')
         limit = args.get('limit')
@@ -170,7 +167,9 @@ class Prediction(Resource):
 
     def post(self):
         parser = reqparse.RequestParser()
-        parser.add_argument('file', type=FileStorage, location='files',
+        parser.add_argument('file',
+                            type=FileStorage,
+                            location='files',
                             help='you need upload a image file')
         args = parser.parse_args()
         file = args.get('file')
@@ -180,12 +179,11 @@ class Prediction(Resource):
             return jsonify({"msg": "fail"})
         ext = file.filename.split('.')[-1]
         upload_file_name = hashlib.md5(
-            (file.filename + str(time.time())).encode('UTF-8')).hexdigest()[:16]
+            (file.filename +
+             str(time.time())).encode('UTF-8')).hexdigest()[:16]
         upload_file_name = '.'.join([upload_file_name, ext])
-        upload_path = os.path.join(
-            app.config['UPLOAD_FOLDER'],
-            upload_file_name
-        )
+        upload_path = os.path.join(app.config['UPLOAD_FOLDER'],
+                                   upload_file_name)
         check_dir(app.config['UPLOAD_FOLDER'])
         file.save(upload_path)
         res = get_label(upload_path)
