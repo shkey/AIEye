@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from datetime import datetime
 
-from pytz import timezone, utc
+from pytz import timezone
 
 from factory import db
 
