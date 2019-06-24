@@ -2,7 +2,7 @@
 
 一个由 Flask，TensorFlow 和 Gevent 编写并使用 Docker 进行部署的能简单进行白内障识别检测的应用。
 
-演示地址：<http://aieye.fumengji.com>
+演示地址：<http://aieye.fumengji.com:8080>
 
 ## 如何部署使用？
 
