@@ -12,7 +12,7 @@
 # 克隆本仓库至你的电脑（由于启用了 git lfs，需要安装git-lfs进行克隆）
 $ git lfs clone https://github.com/shkey/AIEye.git
 # 进入本仓库的 deploy 目录
-$ cd AIEye/deploy
+$ cd AIEye/deploy/docker-file
 # 运行以下命令进行部署
 $ docker-compose up -d
 ```
